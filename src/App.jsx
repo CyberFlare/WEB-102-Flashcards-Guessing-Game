@@ -8,43 +8,43 @@ import Buttons from './components/Buttons.jsx';
 function App() {
   const cards = [
     {
-      img: "nangong-yu.jpg",
+      img: "src\\charImg\\nangong.png",
       answer: "Nangong Yu"
     },
     {
-      img: "lucia.jpg",
+      img: "src\\charImg\\lucia.png",
       answer: "Lucia"
     },
     {
-      img: "alice.jpg",
+      img: "src\\charImg\\alice.png",
       answer: "Alice"
     },
     {
-      img: "yixuan.jpg",
+      img: "src\\charImg\\yixuan.png",
       answer: "Yixuan"
     },
     {
-      img: "vivian.jpg",
+      img: "src\\charImg\\vivian.png",
       answer: "Vivian"
     },
     {
-      img: "astra-yao.jpg",
+      img: "src\\charImg\\astra.png",
       answer: "Astra Yao"
     },
     {
-      img: "evelyn.jpg",
+      img: "src\\charImg\\evelyn.png",
       answer: "Evelyn"
     },
     {
-      img: "ellen.jpg",
+      img: "src\\charImg\\ellen.png",
       answer: "Ellen"
     },
     {
-      img: "miyabi.jpg",
+      img: "src\\charImg\\miyabi.png",
       answer: "Miyabi"
     },
     {
-      img: "anby.jpg",
+      img: "src\\charImg\\anby.png",
       answer: "Anby"
     }
   ];
@@ -53,8 +53,8 @@ function App() {
     const shuffled = [...cards].sort(() => Math.random() - 0.5);
 
     shuffled.push({
-      img: "",
-      answer: "Congrats! You're Finished!"
+      img: "src\\charImg\\congratsAI.jpeg",
+      answer: "Congratulations! You did it! You finshed!"
     });
 
     return shuffled;
@@ -70,15 +70,19 @@ function App() {
 
   const nextCard = () => {
   if (currentCard < shuffledCards.length - 1) {
-      setCurrentCard(currentCard + 1);
-      setFlipped(false);
+    setFlipped(false);
+    setTimeout(() => {
+      setCurrentCard(currentCard + 1); 
+    }, 600);
     }
   }
 
   const prevCard = () => {
     if (currentCard > 0) {
-      setCurrentCard(currentCard - 1);
       setFlipped(false);
+      setTimeout(() => {
+        setCurrentCard(currentCard - 1);
+      },600);
     }
   }
 
@@ -86,8 +90,11 @@ function App() {
     <div className="App">
       <h1>ZZZ Guessing Game</h1>
       <p>Guess the Zenless Zone Zero Character Based on the Photo!</p>
-      <Counter count={shuffledCards.length - currentCard - 1}/>
-      <Card img={shuffledCards[currentCard].img} answer={shuffledCards[currentCard].answer} flip={flipped} flipCard={flipCard}/>
+      {/*<Counter count={shuffledCards.length - currentCard - 1}/>*/}
+      <p>Number of Cards: 10</p>
+      <div className="CardContainer">
+        <Card img={shuffledCards[currentCard].img} answer={shuffledCards[currentCard].answer} flip={flipped} flipCard={flipCard}/>
+      </div>
       <Buttons prevCard={prevCard} nextCard={nextCard}></Buttons>
     </div>
   )
