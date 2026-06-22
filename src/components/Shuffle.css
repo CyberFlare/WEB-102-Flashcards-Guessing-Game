@@ -1,4 +1,4 @@
-.Buttons button{
+.Shuffle button{
     border-radius: 5px;
     outline-color: #FFDE21;
     outline-width: 2px;
@@ -7,12 +7,4 @@
     color: white;
 
     padding: 10px 20px;
-}
-
-.Buttons button:disabled{
-    background-color: #888888;
-    color: #dddddd;
-    cursor: not-allowed;
-    outline-style: none;
-    opacity: 0.7;
 }

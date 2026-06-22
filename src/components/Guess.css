@@ -1,0 +1,47 @@
+.Guess {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+
+.Guess button{
+    border-radius: 5px;
+    outline-color: #FFDE21;
+    outline-width: 2px;
+    outline-style: solid;
+    background-color: #1f1f1f;
+    color: white;
+
+    padding: 10px 20px;
+}
+
+.Guess form {
+    display: flex;
+    gap: 10px;
+    margin: 10px;
+}
+
+.Guess form input{
+    border-radius: 5px;
+    outline-color: #FFDE21;
+    outline-width: 2px;
+    outline-style: solid;
+    background-color: #1f1f1f;
+    color: white;
+
+    padding: 10px 20px;
+}
+
+
+.Guess form input.correct {
+    outline-color: green;
+    outline-width: 2px;
+    outline-style: solid;
+}
+
+.Guess form input.wrong {
+    outline-color: red;
+    outline-width: 2px;
+    outline-style: solid;
+}

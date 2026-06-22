@@ -6,8 +6,8 @@ function Buttons(props) {
 
   return (
     <div className="Buttons">
-        <button onClick={props.prevCard}>{"<-"}</button>
-        <button onClick={props.nextCard}>{"->"}</button>
+        <button onClick={props.prevCard} disabled={props.isFirst}>{"<-"}</button>
+        <button onClick={props.nextCard} disabled={props.isLast}>{"->"}</button>
     </div>
   )
 }

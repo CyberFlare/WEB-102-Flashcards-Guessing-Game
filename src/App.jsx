@@ -4,80 +4,69 @@ import Counter from './components/Counter.jsx'
 import './App.css'
 import Card from './components/Card.jsx';
 import Buttons from './components/Buttons.jsx';
+import Guess from './components/Guess.jsx';
+import Shuffle from './components/Shuffle.jsx';
+import cards from "./cards";
 
 function App() {
-  const cards = [
-    {
-      img: "src\\charImg\\nangong.png",
-      answer: "Nangong Yu"
-    },
-    {
-      img: "src\\charImg\\lucia.png",
-      answer: "Lucia"
-    },
-    {
-      img: "src\\charImg\\alice.png",
-      answer: "Alice"
-    },
-    {
-      img: "src\\charImg\\yixuan.png",
-      answer: "Yixuan"
-    },
-    {
-      img: "src\\charImg\\vivian.png",
-      answer: "Vivian"
-    },
-    {
-      img: "src\\charImg\\astra.png",
-      answer: "Astra Yao"
-    },
-    {
-      img: "src\\charImg\\evelyn.png",
-      answer: "Evelyn"
-    },
-    {
-      img: "src\\charImg\\ellen.png",
-      answer: "Ellen"
-    },
-    {
-      img: "src\\charImg\\miyabi.png",
-      answer: "Miyabi"
-    },
-    {
-      img: "src\\charImg\\anby.png",
-      answer: "Anby"
-    }
-  ];
 
-  const [shuffledCards] = useState(() => {
-    const shuffled = [...cards].sort(() => Math.random() - 0.5);
+  const [shuffledCards, setShuffledCards] = useState(() => {
+    const initial = [...cards];
 
-    shuffled.push({
-      img: "src\\charImg\\congratsAI.jpeg",
+    initial.push({
+      img: "/charImg/congratsAI.jpeg",
       answer: "Congratulations! You did it! You finshed!"
-    });
+  });
 
-    return shuffled;
+    return initial;
   });
 
   const [currentCard, setCurrentCard] = useState(0);
 
   const [flipped, setFlipped] = useState(false);
 
+  const [guess, setGuess] = useState("");
+
+  const [guessStatus, setGuessStatus] = useState("");
+
+  const shuffleDeck = () => {
+    const core = cards.slice();
+    const shuffledCore = [...core].sort(() => Math.random() - 0.5);
+
+    shuffledCore.push({
+      img: "/charImg/congratsAI.jpeg",
+      answer: "Congratulations! You did it! You finshed!"
+    });
+
+    setShuffledCards(shuffledCore);
+    setCurrentCard(0);
+    setGuess("");
+    setGuessStatus("");
+    setFlipped(false);
+  }
+
   const flipCard = () => {
       setFlipped(!flipped);
   }
 
   const nextCard = () => {
-  if (currentCard < shuffledCards.length - 1) {
-    setFlipped(false);
-    setTimeout(() => {
-      setCurrentCard(currentCard + 1); 
-    }, 600);
+    // clear any existing guess and status when moving forward
+    setGuess("");
+    setGuessStatus("");
+
+    if (currentCard < shuffledCards.length - 1) {
+      setFlipped(false);
+      setTimeout(() => {
+        setCurrentCard(currentCard + 1);
+      }, 600);
     }
   }
 
   const prevCard = () => {
+    // clear guess and status when moving back
+    setGuess("");
+    setGuessStatus("");
+
     if (currentCard > 0) {
       setFlipped(false);
       setTimeout(() => {
@@ -85,6 +74,21 @@ function App() {
       },600);
     }
   }
+
+  const handleGuess = (e) => {
+    e.preventDefault();
+
+    const guess = e.target.answer.value;
+
+    setGuess(guess);
+
+    if (guess.toLowerCase() === shuffledCards[currentCard].answer.toLowerCase()) {
+      setGuessStatus("correct");
+    } 
+    else {
+      setGuessStatus("wrong");
+  }
+}
 
   return (
     <div className="App">
@@ -95,7 +99,11 @@ function App() {
       <div className="CardContainer">
         <Card img={shuffledCards[currentCard].img} answer={shuffledCards[currentCard].answer} flip={flipped} flipCard={flipCard}/>
       </div>
-      <Buttons prevCard={prevCard} nextCard={nextCard}></Buttons>
+      <Guess handleGuess={handleGuess} guessStatus={guessStatus} guess={guess} setGuess={setGuess} />
+      <div className="Buttons">
+        <Buttons prevCard={prevCard} nextCard={nextCard} isFirst={currentCard == 0} isLast={currentCard == shuffledCards.length - 1} />
+        <Shuffle handleShuffle={shuffleDeck} />
+      </div>
     </div>
   )
 }
