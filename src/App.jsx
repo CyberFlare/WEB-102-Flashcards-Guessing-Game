@@ -50,7 +50,6 @@ function App() {
   }
 
   const nextCard = () => {
-    // clear any existing guess and status when moving forward
     setGuess("");
     setGuessStatus("");
 
@@ -63,7 +62,6 @@ function App() {
   }
 
   const prevCard = () => {
-    // clear guess and status when moving back
     setGuess("");
     setGuessStatus("");
 
